@@ -5,7 +5,7 @@ from datetime import datetime
 
 # Getting the first day of challenge and the actual day.
 # Update with the date you started the challenge.
-day_0 = datetime.strptime("DATE_YOU_STARTED", "%d/%m/%Y")
+day_0 = datetime.strptime("13/05/2020", "%d/%m/%Y")
 today = datetime.now()
 
 # Getting the current day of challenge.
@@ -66,7 +66,9 @@ class BotGithub:
 
     def click_sign_in(self):
         try:
-            btn_sign_in = self.bot.find_element_by_link_text("Sign in")
+            btn_sign_in = self.bot.find_element_by_xpath(
+                "/html/body/div[1]/header/div/div[2]/div[2]/a[1]"
+            )
             btn_sign_in.click()
         except Exception as e:
             print("Error clicking in the Sign in button: ", e)
@@ -91,8 +93,9 @@ class BotGithub:
     def acess_repository(self):
         try:
             button_repository = self.bot.find_element_by_xpath(
-                '//*[@id="repos-container"]/ul/li[2]/div/a/span[2]'
+                '//*[@id="repos-container"]/ul/li[3]/div/a'
             )
+
             button_repository.click()
         except Exception as e:
             print("Error trying to acess repository.", e)
@@ -120,7 +123,7 @@ class BotGithub:
         Add the daily log.
 
         First got down the scrollbar,
-        Then click the last but one row,
+        Then click the last plus one row,
         Lastly write the progress and thoughts of the day automatically.
         """
         try:
@@ -132,12 +135,12 @@ class BotGithub:
             sleep(3)
 
             field = self.bot.find_element_by_xpath(
-                '//*[@id="new_blob"]/div[5]/div[2]/div/div[5]/div[1]/div/div/div/div[5]/div[last()-1]/pre'
+                '//*[@id="new_blob"]/div[5]/div[2]/div/div[5]/div[1]/div/div/div/div[5]/div[last()]/pre'
             )
             field.send_keys(
-                f"### Day {day_x.days} {current_month} {current_day}, {current_year}",
+                f"\n\n### Day {day_x.days} {current_month} {current_day}, {current_year}",
                 f"\n\n**Today's Progress**: {self.progress}",
-                f"\n\n**Thoughts:**: {self.thoughts}",
+                f"\n\n**Thoughts**: {self.thoughts}",
             )
         except Exception as e:
             print("Error adding the daily log:", e)
@@ -166,7 +169,7 @@ if __name__ == "__main__":
     bot.acess_site()
 
     # Checking if the user isn't logged
-    if bot.check_login() is False:
+    if not bot.check_login():
         bot.click_sign_in()
         bot.login()
 
@@ -175,8 +178,7 @@ if __name__ == "__main__":
     bot.acess_edit_file()
     sleep(3)
     bot.add_daily_log()
-    sleep(3)
+    sleep(30)
     bot.commit_changes()
-
-    sleep(50)
+    sleep(5)
     bot.exit()
