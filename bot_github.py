@@ -4,6 +4,7 @@ from time import sleep
 from datetime import datetime
 
 # Getting the first day of challenge and the actual day.
+# Update with the date you started the challenge.
 day_0 = datetime.strptime("DATE_YOU_STARTED", "%d/%m/%Y")
 today = datetime.now()
 
@@ -156,12 +157,12 @@ class BotGithub:
 
 if __name__ == "__main__":
 
+    user = input("Your github username: ")
+    password = input("Your github password: ")
     progress = input("Today's progress: ")
     thoughts = input("Thoughts: ")
 
-    bot = BotGithub(
-        "https://github.com/", "YOUR_USER", "YOUR_PASSWORD", progress, thoughts
-    )
+    bot = BotGithub("https://github.com/", user, password, progress, thoughts)
     bot.acess_site()
 
     # Checking if the user isn't logged
