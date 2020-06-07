@@ -42,7 +42,7 @@ Also, you need to install the requirements that I put on requirements.txt
 **Cloning the Repository**
 
 ```
-$ git clone https://github.com/tiagod3p/100-days-of-code-log-bot
+$ git clone https://github.com/tiagod3p/100-days-of-code-log-bot.git
 
 $ cd 100-days-of-code-log-bot
 ```
